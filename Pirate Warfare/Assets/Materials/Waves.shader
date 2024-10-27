@@ -10,9 +10,10 @@ Shader "Custom/Waves"
         //_Wavelength ("Wavelength", Float) = 10
         //_Direction ("Direction (2D)", Vector) = (1,0,0,0)
 
-        _WaveA ("Wave A (dir, steepness, wavelength)", Vector) = (1,0,0.5,10)
-        _WaveB ("Wave B (dir, steepness, wavelength)", Vector) = (0,1,0.25,20)
-        _WaveC ("Wave C (dir, steepness, wavelength)", Vector) = (0,1,0.25,20)
+        
+        _WaveA ("Wave A dir, steepness, wavelength", Vector) = (1,0,0.5,10)
+        _WaveB ("Wave B dir, steepness, wavelength", Vector) = (0,1,0.25,20)
+        _WaveC ("Wave C dir, steepness, wavelength", Vector) = (0,1,0.25,20)
 
         //_Speed ("Speed", Float) = 1
 

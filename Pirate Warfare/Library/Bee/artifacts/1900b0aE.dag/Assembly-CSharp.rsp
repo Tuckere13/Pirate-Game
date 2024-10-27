@@ -391,8 +391,11 @@
 "Assets/Imports/TextMesh Pro/Examples & Extras/Scripts/VertexShakeB.cs"
 "Assets/Imports/TextMesh Pro/Examples & Extras/Scripts/VertexZoom.cs"
 "Assets/Imports/TextMesh Pro/Examples & Extras/Scripts/WarpTextExample.cs"
+"Assets/PlayerMovement.cs"
+"Assets/Scripts/Floater.cs"
 "Assets/Scripts/MenuBoatMovement.cs"
 "Assets/Scripts/WaterMovement.cs"
+"Assets/Scripts/WaveManager.cs"
 -langversion:9.0
 /deterministic
 /optimize+
