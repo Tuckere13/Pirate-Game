@@ -119,6 +119,7 @@
 -define:ENABLE_LEGACY_INPUT_MANAGER
 -define:TEXTCORE_FONT_ENGINE_1_5_OR_NEWER
 -define:UNITY_POST_PROCESSING_STACK_V2
+-define:CREST_OCEAN
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
 -r:"C:/Program Files/Unity/Hub/Editor/2022.3.32f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
@@ -328,6 +329,8 @@
 -r:"C:/Program Files/Unity/Hub/Editor/2022.3.32f1/Editor/Data/NetStandard/ref/2.1.0/netstandard.dll"
 -r:"Library/PackageCache/com.unity.testtools.codecoverage@1.2.5/lib/ReportGenerator/ReportGeneratorMerged.dll"
 -r:"Library/PackageCache/com.unity.visualscripting@1.9.4/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Crest.Helpers.Editor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Crest.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.EditorCoroutines.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Performance.Profile-Analyzer.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.PlasticSCM.Editor.ref.dll"
@@ -355,6 +358,10 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.32f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.32f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
+"Assets/CannonManager.cs"
+"Assets/Development/Scripts/Constants.cs"
+"Assets/Development/Scripts/TestCameraChange.cs"
+"Assets/Development/Scripts/TestDynamicResolution.cs"
 "Assets/Imports/Arkham Interactive/Toony/Skies/Scripts/Levelloader.cs"
 "Assets/Imports/Arkham Interactive/Toony/Skies/Scripts/MouseLook.cs"
 "Assets/Imports/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
@@ -392,6 +399,7 @@
 "Assets/Imports/TextMesh Pro/Examples & Extras/Scripts/VertexZoom.cs"
 "Assets/Imports/TextMesh Pro/Examples & Extras/Scripts/WarpTextExample.cs"
 "Assets/PlayerMovement.cs"
+"Assets/Scripts/BoatManager.cs"
 "Assets/Scripts/Floater.cs"
 "Assets/Scripts/MenuBoatMovement.cs"
 "Assets/Scripts/WaterMovement.cs"
