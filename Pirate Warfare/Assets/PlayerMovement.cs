@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
     private float rotationX = 0;
     private Vector2 currentInput;
 
+    public bool usingSteeringWheel = false;
+
     private void Start()
     {
         playerSprintSpeed = (float)(playerBaseSpeed + (playerBaseSpeed * .5));
@@ -45,21 +47,29 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (!usingSteeringWheel)
         {
-            playerSpeed = playerSprintSpeed;
-        } else
-        {
-            playerSpeed = playerBaseSpeed;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                playerSpeed = playerSprintSpeed;
+            }
+            else
+            {
+                playerSpeed = playerBaseSpeed;
+            }
+
+            if (CanMove)
+            {
+                HandleMovementInput();
+            }
         }
 
-        if (CanMove)
+        if (CanMove && !usingSteeringWheel)
         {
-            HandleMovementInput();
-            HandleMouseLook();
-
             ApplyFinalMovement();
         }
+
+        HandleMouseLook();
     }
 
     private void HandleMovementInput()
