@@ -36,6 +36,9 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody shipRigidbody; // Reference to the ship's Rigidbody
     private bool isOnShip = false;
 
+    Vector3 _savePosition;
+    Vector3 externalMovement;
+
     private void Start()
     {
         playerSprintSpeed = (float)(playerBaseSpeed + (playerBaseSpeed * .5));
@@ -71,12 +74,21 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        
+
+        HandleMouseLook();
+    }
+
+    private void FixedUpdate()
+    {
+        externalMovement = transform.position - _savePosition;
+
         if (CanMove && !usingSteeringWheel)
         {
             ApplyFinalMovement();
         }
 
-        HandleMouseLook();
+        _savePosition = transform.position;
     }
 
     private void HandleMovementInput()
@@ -100,8 +112,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!characterController.isGrounded) 
             moveDirection.y -= gravity * Time.deltaTime;
-        
 
-        characterController.Move(moveDirection * Time.deltaTime);
+
+        
+        characterController.Move((moveDirection * Time.deltaTime));
+
+        if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+        {
+            
+        }
+        
     }
 }

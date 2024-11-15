@@ -56,9 +56,13 @@ public class BoatManager : MonoBehaviour
             FireCannons(leftSideCannons);
         }
 
-        ApplyThrust();
+        
     }
 
+    private void FixedUpdate()
+    {
+        ApplyThrust();
+    }
 
     private void ApplyThrust()
     {
