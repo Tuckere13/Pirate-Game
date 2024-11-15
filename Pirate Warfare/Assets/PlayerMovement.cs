@@ -32,9 +32,14 @@ public class PlayerMovement : MonoBehaviour
 
     public bool usingSteeringWheel = false;
 
+    [Header("Ship Interaction")]
+    public Rigidbody shipRigidbody; // Reference to the ship's Rigidbody
+    private bool isOnShip = false;
+
     private void Start()
     {
         playerSprintSpeed = (float)(playerBaseSpeed + (playerBaseSpeed * .5));
+
     }
 
     void Awake()
@@ -47,6 +52,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        // Calculate ship movement since last frame
+
         if (!usingSteeringWheel)
         {
             if (Input.GetKey(KeyCode.LeftShift))

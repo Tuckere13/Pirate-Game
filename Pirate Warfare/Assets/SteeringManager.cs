@@ -91,7 +91,6 @@ public class SteeringManager : MonoBehaviour
         float dot = Vector3.Dot(player.transform.forward, toSteeringWheel);
         if (dot < facingThreshold)
         {
-            UnityEngine.Debug.Log("Here 1");
             canUseWheel = false;
             return;
         }
@@ -100,7 +99,6 @@ public class SteeringManager : MonoBehaviour
         float distance = Vector3.Distance(player.transform.position, steeringWheel.position);
         if (distance > interactionDistance)
         {
-            UnityEngine.Debug.Log("Here 2");
             canUseWheel = false;
             return;
         }
@@ -108,14 +106,12 @@ public class SteeringManager : MonoBehaviour
         // check if player is on same deck as the wheel within an amount
         if (Mathf.Abs(player.transform.position.y - steeringWheel.position.y) <= interactionHeightTolerance)// Adjust tolerance as needed
         {
-            UnityEngine.Debug.Log("Here 3");
             canUseWheel = false;
             return;
         }
         
 
         canUseWheel = true;
-        UnityEngine.Debug.Log("Can Use");
         return;
 
     }
