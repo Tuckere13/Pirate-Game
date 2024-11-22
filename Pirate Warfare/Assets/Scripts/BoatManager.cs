@@ -1,8 +1,6 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
-using Unity.PlasticSCM.Editor.WebApi;
-using Unity.VisualScripting;
     using UnityEngine;
 
 
@@ -18,7 +16,7 @@ public class BoatManager : MonoBehaviour
 
      // Sails
      public enum SailStatus { Empty, OneQuarter, Half, ThreeQuarters, Full};  
-     public SailStatus currentSailStatus = SailStatus.Full;
+     public SailStatus currentSailStatus;
 
     public static class SailStatusValues // Set Enums to decimal values
     {
@@ -83,6 +81,10 @@ public class BoatManager : MonoBehaviour
         {
             currentWheelRotation = steeringManager.currentWheelRotation;
         }
+
+        UnityEngine.Debug.Log(currentSailStatus);
+
+
     }
 
     private void FixedUpdate()
@@ -121,8 +123,11 @@ public class BoatManager : MonoBehaviour
 
 
     // Set from UI buttons
-    void SetSail(SailStatus sailStatus)
+    public void SetSail(SailStatus sailStatus)
      {
+        UnityEngine.Debug.Log("SetSail Called");
+        UnityEngine.Debug.Log(sailStatus);
+
         currentSailStatus = sailStatus;
      }
 

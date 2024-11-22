@@ -406,6 +406,7 @@
 "Assets/Scripts/MenuBoatMovement.cs"
 "Assets/Scripts/WaterMovement.cs"
 "Assets/Scripts/WaveManager.cs"
+"Assets/SetSailStatus.cs"
 "Assets/SteeringManager.cs"
 "Assets/WaterManager.cs"
 -langversion:9.0

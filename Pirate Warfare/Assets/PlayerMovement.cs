@@ -73,8 +73,13 @@ public class PlayerMovement : MonoBehaviour
                 HandleMovementInput();
             }
         }
+        else
+        {
+            
+            LookAtHorizonSmooth(12.0f); 
+        }
 
-        
+
 
         HandleMouseLook();
     }
@@ -102,10 +107,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMouseLook()
     {
-        rotationX -= Input.GetAxis("Mouse Y") * lookSpeedY;
-        rotationX = Mathf.Clamp(rotationX, -upperLookLimit, lowerLookLimit);
-        playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeedX, 0);
+        if (!usingSteeringWheel)
+        {
+            rotationX -= Input.GetAxis("Mouse Y") * lookSpeedY;
+            rotationX = Mathf.Clamp(rotationX, -upperLookLimit, lowerLookLimit);
+            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeedX, 0);
+        }
+        
     }
 
     private void ApplyFinalMovement()
@@ -113,14 +122,32 @@ public class PlayerMovement : MonoBehaviour
         if (!characterController.isGrounded) 
             moveDirection.y -= gravity * Time.fixedDeltaTime;
 
-
-        
         characterController.Move((moveDirection * Time.deltaTime));
+    }
 
-        if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+
+    public void LookAtWheel(Vector3 direction)
+    {
+        if (direction != Vector3.zero)
         {
-            
+            // Look towards the given direction while setting the upward axis to Vector3.up
+            transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
         }
-        
+        else
+        {
+            // If direction is zero, make the player look straight up
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
+        }
+    }
+    public void LookAtHorizonSmooth(float speed)
+    {
+        Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
+
+        // Smoothly interpolate the camera's rotation to the target rotation
+        playerCamera.transform.rotation = Quaternion.Slerp(
+            playerCamera.transform.rotation,
+            targetRotation,
+            Time.deltaTime * speed
+        );
     }
 }

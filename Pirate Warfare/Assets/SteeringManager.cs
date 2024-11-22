@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -32,7 +29,12 @@ public class SteeringManager : MonoBehaviour
     [Tooltip("Higher Number = Higher Turn Speed")]
     [Range(0f, .2f)]
     public float shipRotationSpeed = 0.075f;
-    
+
+
+    [Header("UI Popup")]
+    public GameObject sailUI;
+    private bool showUI = false;
+
 
 
     private void Awake()
@@ -43,56 +45,56 @@ public class SteeringManager : MonoBehaviour
 
     private void Update()
     {
+        
+        CheckCanUseWheel();
 
-        checkCanUseWheel();
 
         if (Input.GetKeyDown(KeyCode.F) && canUseWheel)
         {
             playerUsingWheel = !playerUsingWheel;   // switch from true to false or vice versa
-
-            //Vector3 directionToWheel = (steeringWheel.position - player.transform.position).normalized;
-            //targetRotation = Quaternion.LookRotation(directionToWheel);
-            //isRotating = true;
+            showUI = !showUI;
 
             playerMovement.usingSteeringWheel = playerUsingWheel;
+
         }
 
 
         if (playerUsingWheel)
         {
+
             player.transform.position = playerStandingPosition.position;
 
-
+            playerMovement.LookAtWheel(-transform.right);
             TurnWheel();
 
+            // Make the cursor visible and unlock it
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
 
-            // Show UI Here ***********
-
-        }
-
-        if (isRotating && playerUsingWheel)
-        {
-            player.transform.rotation = targetRotation;
-
-            // Stop rotating when the player is close enough to the target rotation
-            if (Quaternion.Angle(player.transform.rotation, targetRotation) < 1f)
+            if (sailUI != null)
             {
-                player.transform.rotation = targetRotation;
-
-                Vector3 newEulerAngles = player.transform.eulerAngles;
-                newEulerAngles.z = 0f; // Set x rotation to upright
-                newEulerAngles.x = 0f; // Set y rotation to face forward
-
-                player.transform.eulerAngles = newEulerAngles;
-
-                isRotating = false;
+                sailUI.SetActive(true); // Activate the pop-up
             }
         }
+        else
+        {
+            // Hide the cursor and lock it to the center of the screen
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+
+
+            if (sailUI != null)
+            {
+                sailUI.SetActive(false); // Deactivate the pop-up
+            }
+        }
+
+        
     }
 
     
 
-    private void checkCanUseWheel()
+    private void CheckCanUseWheel()
     {
         Vector3 toSteeringWheel = (steeringWheel.position - player.transform.position).normalized;
 
@@ -152,8 +154,7 @@ public class SteeringManager : MonoBehaviour
             }
         }
 
-        UnityEngine.Debug.Log(currentWheelRotation);
     }
 
-
+    
 }
