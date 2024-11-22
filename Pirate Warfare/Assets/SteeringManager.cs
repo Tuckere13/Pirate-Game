@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -9,11 +10,13 @@ public class SteeringManager : MonoBehaviour
     public Transform steeringWheel;
     public GameObject player;
 
-    public Transform playerStandingPosition;
+    public Transform playerStandingPosition;  // Where player stands when using wheel
 
     private bool playerUsingWheel = false;
+
     private bool canUseWheel = false;
 
+    [Header("Steering Wheel Use")] 
     public float facingThreshold = 0.8f;
     public float interactionDistance = 2.0f;
     public float interactionHeightTolerance = 3.0f;
@@ -22,6 +25,14 @@ public class SteeringManager : MonoBehaviour
     private Quaternion targetRotation;
 
     private PlayerMovement playerMovement;
+
+    
+    [Header("Ship Rotation")]
+    public float currentWheelRotation = 0.0f;
+    [Tooltip("Higher Number = Higher Turn Speed")]
+    [Range(0f, .2f)]
+    public float shipRotationSpeed = 0.075f;
+    
 
 
     private void Awake()
@@ -39,9 +50,9 @@ public class SteeringManager : MonoBehaviour
         {
             playerUsingWheel = !playerUsingWheel;   // switch from true to false or vice versa
 
-            Vector3 directionToWheel = (steeringWheel.position - player.transform.position).normalized;
-            targetRotation = Quaternion.LookRotation(directionToWheel);
-            isRotating = true;
+            //Vector3 directionToWheel = (steeringWheel.position - player.transform.position).normalized;
+            //targetRotation = Quaternion.LookRotation(directionToWheel);
+            //isRotating = true;
 
             playerMovement.usingSteeringWheel = playerUsingWheel;
         }
@@ -50,9 +61,13 @@ public class SteeringManager : MonoBehaviour
         if (playerUsingWheel)
         {
             player.transform.position = playerStandingPosition.position;
-            //player.transform.LookAt(steeringWheel.transform);
-            // show UI
-            
+
+
+            TurnWheel();
+
+
+            // Show UI Here ***********
+
         }
 
         if (isRotating && playerUsingWheel)
@@ -75,11 +90,11 @@ public class SteeringManager : MonoBehaviour
         }
     }
 
+    
+
     private void checkCanUseWheel()
     {
-
         Vector3 toSteeringWheel = (steeringWheel.position - player.transform.position).normalized;
-
 
         if (playerUsingWheel)
         {
@@ -109,10 +124,36 @@ public class SteeringManager : MonoBehaviour
             canUseWheel = false;
             return;
         }
-        
-
         canUseWheel = true;
         return;
-
     }
+
+
+    private void TurnWheel()
+    {
+
+        if (Input.GetKey(KeyCode.A) && Input.GetKeyDown(KeyCode.D))
+        {
+            currentWheelRotation += 0.0f;
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            if (currentWheelRotation >= -1.0f)
+            {
+                currentWheelRotation += -shipRotationSpeed * Time.deltaTime;
+            }
+            
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            if (currentWheelRotation <= 1.0f)
+            {
+                currentWheelRotation += shipRotationSpeed * Time.deltaTime;
+            }
+        }
+
+        UnityEngine.Debug.Log(currentWheelRotation);
+    }
+
+
 }

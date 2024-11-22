@@ -248,8 +248,8 @@ MonoBehaviour:
     y: 0
     width: 241.60004
     height: 722.8
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -761,9 +761,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -924.8212, y: 103.07551, z: 913.9228}
+    m_Target: {x: -513.5973, y: 133.38808, z: 917.73474}
     speed: 2
-    m_Value: {x: -924.8212, y: 103.07551, z: 913.9228}
+    m_Value: {x: -513.5973, y: 133.38808, z: 917.73474}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -809,13 +809,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.043667622, y: 0.90091884, z: -0.09137634, w: 0.422789}
+    m_Target: {x: 0.049584974, y: 0.6875714, z: -0.04622057, w: 0.7234172}
     speed: 2
-    m_Value: {x: 0.046078704, y: 0.89618874, z: -0.09415051, w: 0.4311126}
+    m_Value: {x: 0.04578844, y: 0.6927417, z: -0.043233495, w: 0.7184311}
   m_Size:
-    m_Target: 153.75845
+    m_Target: 537.2749
     speed: 2
-    m_Value: 147.13728
+    m_Value: 537.2749
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -981,9 +981,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 2a5e0000
-      m_LastClickedID: 24106
-      m_ExpandedIDs: 04fbffff2a5e00004a5e0000a85e0000
+      m_SelectedIDs: 7e5e0000
+      m_LastClickedID: 24190
+      m_ExpandedIDs: 04fbffffd45d00002c5e0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1052,7 +1052,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Imports
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1060,16 +1060,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets
+  - Assets/Imports
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\tucke\Unity Projects\Pirate-Game\Pirate Warfare
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 4a600000
-    m_LastClickedID: 24650
-    m_ExpandedIDs: 000000003a6000003c6000003e60000040600000426000004460000046600000486000004a6000004c6000004e600000506000005260000000ca9a3bffffff7f
+    m_SelectedIDs: 6c600000
+    m_LastClickedID: 24684
+    m_ExpandedIDs: 00000000426000004460000046600000486000004a6000004c6000004e60000050600000526000005460000056600000586000005a6000006c60000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1097,7 +1097,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000003a6000003c6000003e60000040600000426000004460000046600000486000004a6000004c6000004e6000005060000052600000
+    m_ExpandedIDs: 00000000426000004460000046600000486000004a6000004c6000004e60000050600000526000005460000056600000586000005a600000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1194,7 +1194,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 0
+  m_LastVerticalScrollValue: 471.20007
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:

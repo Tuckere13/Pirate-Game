@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
     private void ApplyFinalMovement()
     {
         if (!characterController.isGrounded) 
-            moveDirection.y -= gravity * Time.deltaTime;
+            moveDirection.y -= gravity * Time.fixedDeltaTime;
 
 
         

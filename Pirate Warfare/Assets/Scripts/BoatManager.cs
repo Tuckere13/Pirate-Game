@@ -1,7 +1,8 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Unity.VisualScripting;
+using Unity.PlasticSCM.Editor.WebApi;
+using Unity.VisualScripting;
     using UnityEngine;
 
 
@@ -29,22 +30,44 @@ public class BoatManager : MonoBehaviour
         { SailStatus.ThreeQuarters, 0.75f },
         { SailStatus.Full, 1f }
     };
-    } 
+    }
 
 
-    // Ship Steering
-
-
-    // Ship Movement
+    [Header("Ship Movement")]
     public float shipThrust = 10.0f;
     public float shipDrag = 0.5f;
     public float shipAngle = 0.0f;
+
+    [Header("Ship Steering")]
+    public SteeringManager steeringManager;
+    private float currentWheelRotation;
+    public float rotationSpeed = 5.0f; // Adjust this value for a slower or faster turn
+    public float maxTurnAngle = 30.0f; // Maximum turning angle per second at full wheel rotation
+
+    
 
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-         // set th forward vector to the front of ship
+
+        Transform steeringWheelTransform = transform.Find("Steering Wheel");
+
+        if (steeringWheelTransform != null)
+        {
+            steeringManager = steeringWheelTransform.GetComponent<SteeringManager>();
+            if (steeringManager == null)
+            {
+                Debug.LogError("SteeringManager script not found on SteeringWheel object.");
+            }
+        }
+        else
+        {
+            Debug.LogError("SteeringWheel object not found in Boat hierarchy.");
+        }
+
+
+        // set the forward vector to the front of ship
         UnityEngine.Random.InitState(System.Environment.TickCount);
 
     }
@@ -56,12 +79,16 @@ public class BoatManager : MonoBehaviour
             FireCannons(leftSideCannons);
         }
 
-        
+        if (steeringManager != null)
+        {
+            currentWheelRotation = steeringManager.currentWheelRotation;
+        }
     }
 
     private void FixedUpdate()
     {
         ApplyThrust();
+        ApplyRotation();
     }
 
     private void ApplyThrust()
@@ -77,7 +104,14 @@ public class BoatManager : MonoBehaviour
     }
     private void ApplyRotation()
     {
+        float targetTurnAngle = currentWheelRotation * maxTurnAngle;
 
+        // Calculate the actual turn amount (smooth transition)
+        float currentTurnRate = Mathf.Lerp(0, targetTurnAngle, rotationSpeed * Time.fixedDeltaTime);
+
+        // Apply rotation using Rigidbody's torque
+        Vector3 torque = Vector3.up * currentTurnRate;
+        rb.AddTorque(torque, ForceMode.Acceleration);
     }
     private void ApplyDrag()
     {
