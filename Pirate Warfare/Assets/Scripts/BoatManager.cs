@@ -11,8 +11,8 @@ public class BoatManager : MonoBehaviour
     public Rigidbody rb;
 
      // Cannons
-     [SerializeField] private List<GameObject> leftSideCannons;
-     [SerializeField] private List<GameObject> rightSideCannons;
+     [SerializeField] public List<GameObject> leftSideCannons;
+     [SerializeField] public List<GameObject> rightSideCannons;
 
      // Sails
      public enum SailStatus { Empty, OneQuarter, Half, ThreeQuarters, Full};  
@@ -82,7 +82,7 @@ public class BoatManager : MonoBehaviour
             currentWheelRotation = steeringManager.currentWheelRotation;
         }
 
-        UnityEngine.Debug.Log(currentSailStatus);
+        //UnityEngine.Debug.Log(currentSailStatus);
 
 
     }
@@ -125,8 +125,8 @@ public class BoatManager : MonoBehaviour
     // Set from UI buttons
     public void SetSail(SailStatus sailStatus)
      {
-        UnityEngine.Debug.Log("SetSail Called");
-        UnityEngine.Debug.Log(sailStatus);
+        //UnityEngine.Debug.Log("SetSail Called");
+        //UnityEngine.Debug.Log(sailStatus);
 
         currentSailStatus = sailStatus;
      }
@@ -144,7 +144,7 @@ public class BoatManager : MonoBehaviour
         return true; // All cannons are reloaded and ready to shoot
     }
 
-    private void FireCannons(List<GameObject> cannonSide)
+    public void FireCannons(List<GameObject> cannonSide)
     {
         foreach (GameObject cannonObject in cannonSide)
         {

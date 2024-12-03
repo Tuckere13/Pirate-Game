@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Ship Interaction")]
     public Rigidbody shipRigidbody; // Reference to the ship's Rigidbody
-    private bool isOnShip = false;
+    //private bool isOnShip = false;
 
     Vector3 _savePosition;
     Vector3 externalMovement;
@@ -75,8 +75,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            
-            LookAtHorizonSmooth(12.0f); 
+
         }
 
 
@@ -125,29 +124,23 @@ public class PlayerMovement : MonoBehaviour
         characterController.Move((moveDirection * Time.deltaTime));
     }
 
-
-    public void LookAtWheel(Vector3 direction)
+    /// <summary>
+    /// Makes the player camera smoothly look at the specified point.
+    /// </summary>
+    /// <param name="targetPosition"></param> The position the player should look at.
+    public void LookAtWheel(Vector3 targetPosition, float turnAngle)
     {
-        if (direction != Vector3.zero)
-        {
-            // Look towards the given direction while setting the upward axis to Vector3.up
-            transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
-        }
-        else
-        {
-            // If direction is zero, make the player look straight up
-            transform.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
-        }
-    }
-    public void LookAtHorizonSmooth(float speed)
-    {
-        Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
 
-        // Smoothly interpolate the camera's rotation to the target rotation
-        playerCamera.transform.rotation = Quaternion.Slerp(
-            playerCamera.transform.rotation,
-            targetRotation,
-            Time.deltaTime * speed
-        );
+        float upwardOffest = 1.0f;
+        // Adjust the target position upward by the specified offset
+        Vector3 adjustedTarget = targetPosition + Vector3.up * upwardOffest;
+
+        Vector3 headTurnAngle = new Vector3(turnAngle, 0, 0);
+        // Calculate the direction to look at
+        Vector3 lookDir = adjustedTarget - transform.position;
+
+        // Set the camera rotation to look in the adjusted direction
+        playerCamera.transform.rotation = Quaternion.LookRotation(lookDir + headTurnAngle, Vector3.up);
     }
+    
 }

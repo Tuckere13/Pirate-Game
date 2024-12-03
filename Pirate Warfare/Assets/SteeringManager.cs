@@ -6,8 +6,10 @@ public class SteeringManager : MonoBehaviour
 {
     public Transform steeringWheel;
     public GameObject player;
+    public GameObject Wheel;
 
     public Transform playerStandingPosition;  // Where player stands when using wheel
+    public Transform playerLookPoint; // where player looks when using wheel  ***** NOT IN USE *****
 
     private bool playerUsingWheel = false;
 
@@ -18,7 +20,7 @@ public class SteeringManager : MonoBehaviour
     public float interactionDistance = 2.0f;
     public float interactionHeightTolerance = 3.0f;
 
-    private bool isRotating = false;
+    //private bool isRotating = false;
     private Quaternion targetRotation;
 
     private PlayerMovement playerMovement;
@@ -33,26 +35,39 @@ public class SteeringManager : MonoBehaviour
 
     [Header("UI Popup")]
     public GameObject sailUI;
-    private bool showUI = false;
+    public GameObject RightCannonUI;
+    public GameObject LeftCannonUI;
+    private bool showSailUI = false;
+    private bool showRightCannonUI = false;
+    private bool showLeftCannonUI = false;
 
 
 
     private void Awake()
     {
         playerMovement = player.GetComponent<PlayerMovement>();
+        playerLookPoint = GetComponentInChildren<Transform>();
+
+
+        showSailUI = false;
+        showRightCannonUI = false;
+        showLeftCannonUI = false;
+
     }
 
 
     private void Update()
     {
-        
         CheckCanUseWheel();
 
+        Debug.Log($"showSailUI: {showSailUI}, showRightCannonUI: {showRightCannonUI}, showLeftCannonUI: {showLeftCannonUI}");
 
         if (Input.GetKeyDown(KeyCode.F) && canUseWheel)
         {
             playerUsingWheel = !playerUsingWheel;   // switch from true to false or vice versa
-            showUI = !showUI;
+            /*showSailUI = !showSailUI;
+            showRightCannonUI = !showRightCannonUI;
+            showLeftCannonUI = !showLeftCannonUI;*/
 
             playerMovement.usingSteeringWheel = playerUsingWheel;
 
@@ -64,16 +79,67 @@ public class SteeringManager : MonoBehaviour
 
             player.transform.position = playerStandingPosition.position;
 
-            playerMovement.LookAtWheel(-transform.right);
+            float screenWidth = Screen.width;
+
+            Vector3 mousePosition = Input.mousePosition;
+
+
+
+
+            if (mousePosition.x > screenWidth * (4f / 5f))
+            {
+                playerMovement.LookAtWheel(transform.position, 15); // Right turn
+
+                showSailUI = false;
+                showRightCannonUI = true;
+                showLeftCannonUI = false;
+            }
+            else if (mousePosition.x < screenWidth / 5f)
+            {
+                playerMovement.LookAtWheel(transform.position, -15); // Left turn
+
+                showSailUI = false;
+                showRightCannonUI = false;
+                showLeftCannonUI = true;
+            }
+            else
+            {
+                playerMovement.LookAtWheel(transform.position, -.5f); // No turn
+                showSailUI = true;
+                showRightCannonUI = true;
+                showLeftCannonUI = true;
+            }
+
+
             TurnWheel();
+
 
             // Make the cursor visible and unlock it
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
 
-            if (sailUI != null)
+            if (showSailUI)
             {
                 sailUI.SetActive(true); // Activate the pop-up
+            } else
+            {
+                sailUI.SetActive(false);
+            }
+            if (showRightCannonUI)
+            {
+                RightCannonUI.SetActive(true); // Activate the pop-up
+            }
+            else
+            {
+                RightCannonUI.SetActive(false);
+            }
+            if (showLeftCannonUI)
+            {
+                LeftCannonUI.SetActive(true); // Activate the pop-up
+            }
+            else
+            {
+                LeftCannonUI.SetActive(false);
             }
         }
         else
@@ -87,6 +153,14 @@ public class SteeringManager : MonoBehaviour
             {
                 sailUI.SetActive(false); // Deactivate the pop-up
             }
+            if (RightCannonUI != null)
+            {
+                RightCannonUI.SetActive(false); // Deactivate the pop-up
+            }
+            if (LeftCannonUI != null)
+            {
+                LeftCannonUI.SetActive(false); // Deactivate the pop-up
+            }
         }
 
         
@@ -97,36 +171,44 @@ public class SteeringManager : MonoBehaviour
     private void CheckCanUseWheel()
     {
         Vector3 toSteeringWheel = (steeringWheel.position - player.transform.position).normalized;
+        
 
         if (playerUsingWheel)
         {
             canUseWheel = true;
             return;
+            
         }
 
+        
         // check if player is facing steering wheel
         float dot = Vector3.Dot(player.transform.forward, toSteeringWheel);
         if (dot < facingThreshold)
         {
             canUseWheel = false;
+            //UnityEngine.Debug.Log("Here DOT");
             return;
+            
         }
+        
 
         // check if player is within a certain distance from wheel
         float distance = Vector3.Distance(player.transform.position, steeringWheel.position);
         if (distance > interactionDistance)
         {
             canUseWheel = false;
+            //UnityEngine.Debug.Log("Here Distance");
             return;
         }
 
         // check if player is on same deck as the wheel within an amount
-        if (Mathf.Abs(player.transform.position.y - steeringWheel.position.y) <= interactionHeightTolerance)// Adjust tolerance as needed
+        if (Mathf.Abs(player.transform.position.y - steeringWheel.position.y) > interactionHeightTolerance)
         {
             canUseWheel = false;
             return;
         }
         canUseWheel = true;
+
         return;
     }
 
@@ -143,14 +225,20 @@ public class SteeringManager : MonoBehaviour
             if (currentWheelRotation >= -1.0f)
             {
                 currentWheelRotation += -shipRotationSpeed * Time.deltaTime;
+
+                Wheel.transform.Rotate(Vector3.up, 60.0f * Time.deltaTime);
             }
+
             
+
         }
         else if (Input.GetKey(KeyCode.D))
         {
             if (currentWheelRotation <= 1.0f)
             {
                 currentWheelRotation += shipRotationSpeed * Time.deltaTime;
+
+                Wheel.transform.Rotate(Vector3.up, -60.0f * Time.deltaTime);
             }
         }
 

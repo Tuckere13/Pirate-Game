@@ -362,6 +362,7 @@
 "Assets/Development/Scripts/Constants.cs"
 "Assets/Development/Scripts/TestCameraChange.cs"
 "Assets/Development/Scripts/TestDynamicResolution.cs"
+"Assets/FireCannons.cs"
 "Assets/Imports/Arkham Interactive/Toony/Skies/Scripts/Levelloader.cs"
 "Assets/Imports/Arkham Interactive/Toony/Skies/Scripts/MouseLook.cs"
 "Assets/Imports/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"

@@ -23,7 +23,7 @@ public class SetSailStatus : MonoBehaviour
     {
         if (boatManager != null)
         {
-            Debug.Log($"Button clicked! Setting sail status to: {sailStatusToSet}");
+            //Debug.Log($"Button clicked! Setting sail status to: {sailStatusToSet}");
             boatManager.SetSail(sailStatusToSet);
         }
         else
