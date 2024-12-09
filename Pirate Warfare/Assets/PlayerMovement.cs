@@ -128,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
     /// Makes the player camera smoothly look at the specified point.
     /// </summary>
     /// <param name="targetPosition"></param> The position the player should look at.
-    public void LookAtWheel(Vector3 targetPosition, float turnAngle)
+    /*public void LookAtWheel(Vector3 targetPosition, float turnAngle)
     {
 
         float upwardOffest = 1.0f;
@@ -142,5 +142,24 @@ public class PlayerMovement : MonoBehaviour
         // Set the camera rotation to look in the adjusted direction
         playerCamera.transform.rotation = Quaternion.LookRotation(lookDir + headTurnAngle, Vector3.up);
     }
-    
+    */
+
+    public void LookAtWheel(Vector3 targetPosition, float horizontalAngle = 0, float verticalAngle = 0)
+    {
+        float upwardOffset = 1.0f; // Adjust height if necessary
+                                   // Adjust the target position upward by the specified offset
+        Vector3 adjustedTarget = targetPosition + Vector3.up * upwardOffset;
+
+        Vector3 lookDir = adjustedTarget - transform.position;
+
+        Quaternion horizontalRotation = Quaternion.Euler(0, horizontalAngle, 0);
+        Quaternion verticalRotation = Quaternion.Euler(verticalAngle, 0, 0);
+
+        Quaternion adjustedRotation = Quaternion.LookRotation(lookDir) * verticalRotation * horizontalRotation;
+
+        playerCamera.transform.rotation = adjustedRotation;
+    }
+
+
+
 }

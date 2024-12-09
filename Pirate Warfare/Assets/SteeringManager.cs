@@ -60,7 +60,7 @@ public class SteeringManager : MonoBehaviour
     {
         CheckCanUseWheel();
 
-        Debug.Log($"showSailUI: {showSailUI}, showRightCannonUI: {showRightCannonUI}, showLeftCannonUI: {showLeftCannonUI}");
+        //Debug.Log($"showSailUI: {showSailUI}, showRightCannonUI: {showRightCannonUI}, showLeftCannonUI: {showLeftCannonUI}");
 
         if (Input.GetKeyDown(KeyCode.F) && canUseWheel)
         {
@@ -85,7 +85,7 @@ public class SteeringManager : MonoBehaviour
 
 
 
-
+            /*
             if (mousePosition.x > screenWidth * (4f / 5f))
             {
                 playerMovement.LookAtWheel(transform.position, 15); // Right turn
@@ -109,6 +109,32 @@ public class SteeringManager : MonoBehaviour
                 showRightCannonUI = true;
                 showLeftCannonUI = true;
             }
+            */
+            if (mousePosition.x > screenWidth * (4f / 5f))
+            {
+                // Look slightly downward and to the right
+                playerMovement.LookAtWheel(transform.position, 45, 35); // 25 degrees to the right
+                showSailUI = false;
+                showRightCannonUI = true;
+                showLeftCannonUI = false;
+            }
+            else if (mousePosition.x < screenWidth / 5f)
+            {
+                // Look slightly downward and to the left
+                playerMovement.LookAtWheel(transform.position, -45, 35); // 25 degrees to the left
+                showSailUI = false;
+                showRightCannonUI = false;
+                showLeftCannonUI = true;
+            }
+            else
+            {
+                // Look slightly downward and forward
+                playerMovement.LookAtWheel(transform.position, 0, 35); // Slightly downward
+                showSailUI = true;
+                showRightCannonUI = true;
+                showLeftCannonUI = true;
+            }
+
 
 
             TurnWheel();
@@ -186,7 +212,7 @@ public class SteeringManager : MonoBehaviour
         if (dot < facingThreshold)
         {
             canUseWheel = false;
-            //UnityEngine.Debug.Log("Here DOT");
+            UnityEngine.Debug.Log("Here DOT");
             return;
             
         }
@@ -197,7 +223,7 @@ public class SteeringManager : MonoBehaviour
         if (distance > interactionDistance)
         {
             canUseWheel = false;
-            //UnityEngine.Debug.Log("Here Distance");
+            UnityEngine.Debug.Log("Here Distance");
             return;
         }
 
@@ -205,6 +231,7 @@ public class SteeringManager : MonoBehaviour
         if (Mathf.Abs(player.transform.position.y - steeringWheel.position.y) > interactionHeightTolerance)
         {
             canUseWheel = false;
+            UnityEngine.Debug.Log("Here Height");
             return;
         }
         canUseWheel = true;

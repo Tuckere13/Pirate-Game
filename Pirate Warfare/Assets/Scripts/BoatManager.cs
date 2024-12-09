@@ -37,37 +37,30 @@ public class BoatManager : MonoBehaviour
     public float shipAngle = 0.0f;
 
     [Header("Ship Steering")]
+    [SerializeField] private GameObject steeringWheel;
     public SteeringManager steeringManager;
     private float currentWheelRotation;
     public float rotationSpeed = 5.0f; // Adjust this value for a slower or faster turn
     public float maxTurnAngle = 30.0f; // Maximum turning angle per second at full wheel rotation
 
-    
-
-
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
 
-        Transform steeringWheelTransform = transform.Find("Steering Wheel");
-
-        if (steeringWheelTransform != null)
+        if (steeringWheel != null)
         {
-            steeringManager = steeringWheelTransform.GetComponent<SteeringManager>();
+            steeringManager = steeringWheel.GetComponent<SteeringManager>();
             if (steeringManager == null)
             {
-                Debug.LogError("SteeringManager script not found on SteeringWheel object.");
+                Debug.LogError("SteeringManager script not found on the assigned SteeringWheel object.");
             }
         }
         else
         {
-            Debug.LogError("SteeringWheel object not found in Boat hierarchy.");
+            Debug.LogError("SteeringWheel object is not assigned in the Inspector.");
         }
 
-
-        // set the forward vector to the front of ship
-        UnityEngine.Random.InitState(System.Environment.TickCount);
-
+        UnityEngine.Random.InitState(Environment.TickCount);
     }
 
     private void Update()
