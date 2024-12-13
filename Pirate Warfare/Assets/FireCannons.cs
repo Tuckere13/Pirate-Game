@@ -6,6 +6,7 @@ public class FireCannons : MonoBehaviour
 {
     public BoatManager boatManager;
 
+    public GameObject Player;
     public enum CannonSide
     {
         Left,
@@ -24,6 +25,8 @@ public class FireCannons : MonoBehaviour
         {
             Debug.LogError("BoatManager not found on parent objects. Make sure this script is attached to a part of the ship.");
         }
+
+        
     }
 
     public void OnButtonClick()
@@ -38,6 +41,12 @@ public class FireCannons : MonoBehaviour
             {
                 boatManager.FireCannons(boatManager.rightSideCannons);
             }
+
+            VoicelineManager voiceLine = Player.GetComponent<VoicelineManager>();
+            voiceLine.playFireCommand();
+
+            UnityEngine.Debug.Log("FIRE!!!");
+
         }
         else
         {

@@ -83,33 +83,6 @@ public class SteeringManager : MonoBehaviour
 
             Vector3 mousePosition = Input.mousePosition;
 
-
-
-            /*
-            if (mousePosition.x > screenWidth * (4f / 5f))
-            {
-                playerMovement.LookAtWheel(transform.position, 15); // Right turn
-
-                showSailUI = false;
-                showRightCannonUI = true;
-                showLeftCannonUI = false;
-            }
-            else if (mousePosition.x < screenWidth / 5f)
-            {
-                playerMovement.LookAtWheel(transform.position, -15); // Left turn
-
-                showSailUI = false;
-                showRightCannonUI = false;
-                showLeftCannonUI = true;
-            }
-            else
-            {
-                playerMovement.LookAtWheel(transform.position, -.5f); // No turn
-                showSailUI = true;
-                showRightCannonUI = true;
-                showLeftCannonUI = true;
-            }
-            */
             if (mousePosition.x > screenWidth * (4f / 5f))
             {
                 // Look slightly downward and to the right
@@ -212,7 +185,7 @@ public class SteeringManager : MonoBehaviour
         if (dot < facingThreshold)
         {
             canUseWheel = false;
-            UnityEngine.Debug.Log("Here DOT");
+            //UnityEngine.Debug.Log("Here DOT");
             return;
             
         }
@@ -223,7 +196,7 @@ public class SteeringManager : MonoBehaviour
         if (distance > interactionDistance)
         {
             canUseWheel = false;
-            UnityEngine.Debug.Log("Here Distance");
+            //UnityEngine.Debug.Log("Here Distance");
             return;
         }
 
@@ -231,7 +204,7 @@ public class SteeringManager : MonoBehaviour
         if (Mathf.Abs(player.transform.position.y - steeringWheel.position.y) > interactionHeightTolerance)
         {
             canUseWheel = false;
-            UnityEngine.Debug.Log("Here Height");
+            //UnityEngine.Debug.Log("Here Height");
             return;
         }
         canUseWheel = true;

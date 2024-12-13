@@ -42,10 +42,30 @@ public class BoatManager : MonoBehaviour
     private float currentWheelRotation;
     public float rotationSpeed = 5.0f; // Adjust this value for a slower or faster turn
     public float maxTurnAngle = 30.0f; // Maximum turning angle per second at full wheel rotation
+    private float fullSpeedTurnSpeed = 0.0f;
 
-    private void Start()
+    [Header("Sail Objects")]
+    public GameObject FullSails;
+    public GameObject ThreeQSails;
+    public GameObject HalfSails;
+    public GameObject OneQSails;
+    public GameObject EmptySails;
+
+
+
+    public int shipHealth = 100;
+
+    void Awake()
+    {
+
+    }
+    void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        fullSpeedTurnSpeed = maxTurnAngle;
+
+        SetSail(SailStatus.Full);
 
         if (steeringWheel != null)
         {
@@ -61,14 +81,11 @@ public class BoatManager : MonoBehaviour
         }
 
         UnityEngine.Random.InitState(Environment.TickCount);
+
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            FireCannons(leftSideCannons);
-        }
 
         if (steeringManager != null)
         {
@@ -122,7 +139,80 @@ public class BoatManager : MonoBehaviour
         //UnityEngine.Debug.Log(sailStatus);
 
         currentSailStatus = sailStatus;
-     }
+        
+
+        // This is so bad and I need to redo this but I was running out of time so don judge me please
+        if (sailStatus == SailStatus.Full)
+        {
+            maxTurnAngle = (fullSpeedTurnSpeed - (maxTurnAngle * .0f));
+            FullSails.SetActive(true);
+
+            ThreeQSails.SetActive(false);
+            HalfSails.SetActive(false);
+            OneQSails.SetActive(false);
+            EmptySails.SetActive(false);
+        }
+        if (sailStatus == SailStatus.ThreeQuarters)
+        {
+            maxTurnAngle = (fullSpeedTurnSpeed - (fullSpeedTurnSpeed * .10f));
+
+            FullSails.SetActive(false);
+
+            ThreeQSails.SetActive(true);
+
+            HalfSails.SetActive(false);
+            OneQSails.SetActive(false);
+            EmptySails.SetActive(false);
+        }
+        if (sailStatus == SailStatus.Half)
+        {
+            maxTurnAngle = (fullSpeedTurnSpeed - (fullSpeedTurnSpeed * .20f));
+
+            FullSails.SetActive(false);
+            ThreeQSails.SetActive(false);
+
+            HalfSails.SetActive(true);
+
+            OneQSails.SetActive(false);
+            EmptySails.SetActive(false);
+
+
+
+            // Play Half Mast voice Line
+
+        }
+        if (sailStatus == SailStatus.OneQuarter)
+        {
+            maxTurnAngle = (fullSpeedTurnSpeed - (fullSpeedTurnSpeed * .45f));
+
+            FullSails.SetActive(false);
+            ThreeQSails.SetActive(false);
+            HalfSails.SetActive(false);
+
+            OneQSails.SetActive(true);
+
+            EmptySails.SetActive(false);
+        }
+        if (sailStatus == SailStatus.Empty)
+        {
+            maxTurnAngle = (fullSpeedTurnSpeed - (fullSpeedTurnSpeed * .80f));
+
+            FullSails.SetActive(false);
+            ThreeQSails.SetActive(false);
+            HalfSails.SetActive(false);
+            OneQSails.SetActive(false);
+
+            EmptySails.SetActive(true);
+
+
+            // Play stow the sails line
+
+            
+
+        }
+
+        UnityEngine.Debug.Log(maxTurnAngle);
+    }
 
     private bool CheckCannonStatus(List<GameObject> cannonSide)
     {
@@ -144,7 +234,7 @@ public class BoatManager : MonoBehaviour
             CannonManager cannonManager = cannonObject.GetComponent<CannonManager>();
             if (cannonManager != null && cannonManager.canShoot)
             {
-                float delay = UnityEngine.Random.Range(0f, 1f);
+                float delay = UnityEngine.Random.Range(1f, 2f); // Delay Range of cannon shot
                 cannonManager.Fire(delay);
             }
         }
