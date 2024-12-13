@@ -2,6 +2,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class BoatManager : MonoBehaviour
@@ -97,8 +98,10 @@ public class BoatManager : MonoBehaviour
 
         if (shipHealth <= 0)
         {
-            Debug.Log("Ship Sunk!!!!");
-            //SceneManager.LoadScene("WinScreen");
+
+            SceneManager.LoadScene("Lose Screen");
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 

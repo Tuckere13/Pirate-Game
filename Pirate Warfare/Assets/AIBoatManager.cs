@@ -108,8 +108,10 @@ public class AIBoatManager : MonoBehaviour
 
         if (shipHealth <= 0)
         {
-            Debug.Log("Ship Sunk!!!!");
-            //SceneManager.LoadScene("WinScreen");
+            
+            SceneManager.LoadScene("Win Screen");
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
 
         if (playerInRange && canShoot)

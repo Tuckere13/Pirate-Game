@@ -1,17 +1,44 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - AIBoatManager
+    - AISteeringManager
     - BoatManager
+    - CannonBall
     - CannonManager
+    - DamageManager
+    - FireCannons
     - Floater
+    - GoToGame
+    - GoToInstructions
+    - GoToMenu
     - PlayerMovement
+    - SetSailStatus
     - SteeringManager
+    - VoicelineManager
+    - WaterMovement
     - WaveManager
     Crest.dll:
     - Crest.OceanRenderer
     - Crest.ShapeFFT
     - Crest.ShapeGerstner
     - Crest.SimSettingsWave
+    Unity.Postprocessing.Runtime.dll:
+    - UnityEngine.Rendering.PostProcessing.AmbientOcclusion
+    - UnityEngine.Rendering.PostProcessing.AutoExposure
+    - UnityEngine.Rendering.PostProcessing.Bloom
+    - UnityEngine.Rendering.PostProcessing.ChromaticAberration
+    - UnityEngine.Rendering.PostProcessing.ColorGrading
+    - UnityEngine.Rendering.PostProcessing.DepthOfField
+    - UnityEngine.Rendering.PostProcessing.Grain
+    - UnityEngine.Rendering.PostProcessing.LensDistortion
+    - UnityEngine.Rendering.PostProcessing.MotionBlur
+    - UnityEngine.Rendering.PostProcessing.PostProcessLayer
+    - UnityEngine.Rendering.PostProcessing.PostProcessProfile
+    - UnityEngine.Rendering.PostProcessing.PostProcessResources
+    - UnityEngine.Rendering.PostProcessing.PostProcessVolume
+    - UnityEngine.Rendering.PostProcessing.ScreenSpaceReflections
+    - UnityEngine.Rendering.PostProcessing.Vignette
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.TextMeshPro:
@@ -20,6 +47,12 @@ ScriptsOnlyBuild:
     - TMPro.TMP_Settings
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
+    Unity.TextMeshPro.dll:
+    - TMPro.TMP_FontAsset
+    - TMPro.TMP_Settings
+    - TMPro.TMP_SpriteAsset
+    - TMPro.TMP_StyleSheet
+    - TMPro.TextMeshProUGUI
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
@@ -33,6 +66,7 @@ ScriptsOnlyBuild:
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
@@ -40,6 +74,30 @@ ScriptsOnlyBuild:
     Crest:
     - Crest.OceanRenderer/DebugFields
     - Crest.ShapeWaves/DebugFields
+    Unity.Postprocessing.Runtime:
+    - UnityEngine.Rendering.PostProcessing.BoolParameter
+    - UnityEngine.Rendering.PostProcessing.ColorParameter
+    - UnityEngine.Rendering.PostProcessing.FastApproximateAntialiasing
+    - UnityEngine.Rendering.PostProcessing.FloatParameter
+    - UnityEngine.Rendering.PostProcessing.Fog
+    - UnityEngine.Rendering.PostProcessing.GradingModeParameter
+    - UnityEngine.Rendering.PostProcessing.HistogramMonitor
+    - UnityEngine.Rendering.PostProcessing.KernelSizeParameter
+    - UnityEngine.Rendering.PostProcessing.LightMeterMonitor
+    - UnityEngine.Rendering.PostProcessing.PostProcessDebugLayer
+    - UnityEngine.Rendering.PostProcessing.PostProcessDebugLayer/OverlaySettings
+    - UnityEngine.Rendering.PostProcessing.PostProcessResources/ComputeShaders
+    - UnityEngine.Rendering.PostProcessing.PostProcessResources/SMAALuts
+    - UnityEngine.Rendering.PostProcessing.PostProcessResources/Shaders
+    - UnityEngine.Rendering.PostProcessing.Spline
+    - UnityEngine.Rendering.PostProcessing.SplineParameter
+    - UnityEngine.Rendering.PostProcessing.SubpixelMorphologicalAntialiasing
+    - UnityEngine.Rendering.PostProcessing.TemporalAntialiasing
+    - UnityEngine.Rendering.PostProcessing.TextureParameter
+    - UnityEngine.Rendering.PostProcessing.TonemapperParameter
+    - UnityEngine.Rendering.PostProcessing.Vector4Parameter
+    - UnityEngine.Rendering.PostProcessing.VectorscopeMonitor
+    - UnityEngine.Rendering.PostProcessing.WaveformMonitor
     Unity.TextMeshPro:
     - TMPro.FaceInfo_Legacy
     - TMPro.FontAssetCreationSettings
@@ -54,17 +112,171 @@ ScriptsOnlyBuild:
     - TMPro.TMP_SpriteCharacter
     - TMPro.TMP_SpriteGlyph
     - TMPro.TMP_Style
+    - TMPro.VertexGradient
     UnityEngine.CoreModule:
+    - UnityEngine.Events.ArgumentCache
     - UnityEngine.Events.PersistentCallGroup
+    - UnityEngine.Events.PersistentListenerMode
     UnityEngine.TextCoreFontEngineModule:
     - UnityEngine.TextCore.FaceInfo
     - UnityEngine.TextCore.Glyph
     - UnityEngine.TextCore.GlyphMetrics
     - UnityEngine.TextCore.GlyphRect
     UnityEngine.UI:
+    - UnityEngine.UI.AnimationTriggers
+    - UnityEngine.UI.Button/ButtonClickedEvent
+    - UnityEngine.UI.ColorBlock
     - UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
-  methodsToPreserve: []
+    - UnityEngine.UI.Navigation
+    - UnityEngine.UI.SpriteState
+  methodsToPreserve:
+  - assembly: Assembly-CSharp
+    fullTypeName: GoToInstructions
+    methodName: GoToInstruct
+  - assembly: Assembly-CSharp
+    fullTypeName: GoToGame
+    methodName: GoToGameScene
+  - assembly: Assembly-CSharp
+    fullTypeName: GoToMenu
+    methodName: GoToMenuScene
+  - assembly: Assembly-CSharp
+    fullTypeName: FireCannons
+    methodName: OnButtonClick
+  - assembly: Assembly-CSharp
+    fullTypeName: FireCannons
+    methodName: OnButtonClick
+  - assembly: Assembly-CSharp
+    fullTypeName: SetSailStatus
+    methodName: OnButtonClick
+  - assembly: Assembly-CSharp
+    fullTypeName: SetSailStatus
+    methodName: OnButtonClick
+  - assembly: Assembly-CSharp
+    fullTypeName: SetSailStatus
+    methodName: OnButtonClick
+  - assembly: Assembly-CSharp
+    fullTypeName: SetSailStatus
+    methodName: OnButtonClick
+  - assembly: Assembly-CSharp
+    fullTypeName: SetSailStatus
+    methodName: OnButtonClick
+  - assembly: Assembly-CSharp
+    fullTypeName: GoToMenu
+    methodName: GoToMenuScene
+  - assembly: Assembly-CSharp
+    fullTypeName: GoToMenu
+    methodName: GoToMenuScene
   sceneClasses:
+    Assets/Scenes/Instructions.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 1722}
+    - Class: 114
+      Script: {instanceID: 1766}
+    - Class: 114
+      Script: {instanceID: 2854}
+    - Class: 114
+      Script: {instanceID: 3068}
+    - Class: 114
+      Script: {instanceID: 3392}
+    - Class: 114
+      Script: {instanceID: 5472}
+    - Class: 114
+      Script: {instanceID: 6224}
+    - Class: 114
+      Script: {instanceID: 6554}
+    - Class: 114
+      Script: {instanceID: 31442}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/Lose Screen.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 1722}
+    - Class: 114
+      Script: {instanceID: 1766}
+    - Class: 114
+      Script: {instanceID: 2854}
+    - Class: 114
+      Script: {instanceID: 3068}
+    - Class: 114
+      Script: {instanceID: 3392}
+    - Class: 114
+      Script: {instanceID: 5472}
+    - Class: 114
+      Script: {instanceID: 6224}
+    - Class: 114
+      Script: {instanceID: 6554}
+    - Class: 114
+      Script: {instanceID: 31442}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
     Assets/Scenes/Ocean.unity:
     - Class: 1
       Script: {instanceID: 0}
@@ -84,15 +296,13 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
-    - Class: 49
-      Script: {instanceID: 0}
     - Class: 54
+      Script: {instanceID: 0}
+    - Class: 61
       Script: {instanceID: 0}
     - Class: 64
       Script: {instanceID: 0}
     - Class: 65
-      Script: {instanceID: 0}
-    - Class: 72
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
@@ -109,48 +319,52 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1764}
+      Script: {instanceID: 1722}
     - Class: 114
-      Script: {instanceID: 2380}
+      Script: {instanceID: 1766}
     - Class: 114
-      Script: {instanceID: 2780}
+      Script: {instanceID: 1828}
     - Class: 114
-      Script: {instanceID: 2848}
+      Script: {instanceID: 1834}
     - Class: 114
-      Script: {instanceID: 3062}
+      Script: {instanceID: 2786}
     - Class: 114
-      Script: {instanceID: 3570}
+      Script: {instanceID: 2854}
     - Class: 114
-      Script: {instanceID: 3922}
+      Script: {instanceID: 3068}
     - Class: 114
-      Script: {instanceID: 4336}
+      Script: {instanceID: 3392}
     - Class: 114
-      Script: {instanceID: 4446}
+      Script: {instanceID: 3576}
     - Class: 114
-      Script: {instanceID: 4696}
+      Script: {instanceID: 3794}
     - Class: 114
-      Script: {instanceID: 4716}
+      Script: {instanceID: 3930}
     - Class: 114
-      Script: {instanceID: 5460}
+      Script: {instanceID: 3960}
     - Class: 114
-      Script: {instanceID: 5684}
+      Script: {instanceID: 4236}
     - Class: 114
-      Script: {instanceID: 6050}
+      Script: {instanceID: 4708}
     - Class: 114
-      Script: {instanceID: 6206}
+      Script: {instanceID: 5478}
     - Class: 114
-      Script: {instanceID: 6540}
+      Script: {instanceID: 5698}
     - Class: 114
-      Script: {instanceID: 6552}
+      Script: {instanceID: 6136}
     - Class: 114
-      Script: {instanceID: 6606}
+      Script: {instanceID: 6220}
     - Class: 114
-      Script: {instanceID: 7384}
+      Script: {instanceID: 6554}
     - Class: 114
-      Script: {instanceID: 7520}
+      Script: {instanceID: 6566}
+    - Class: 114
+      Script: {instanceID: 6620}
+    - Class: 114
+      Script: {instanceID: 7398}
+    - Class: 114
+      Script: {instanceID: 7534}
     - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
       Script: {instanceID: 0}
     - Class: 135
       Script: {instanceID: 0}
@@ -176,6 +390,152 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 850595691
       Script: {instanceID: 0}
+    Assets/Scenes/Title Screen.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 49
+      Script: {instanceID: 0}
+    - Class: 64
+      Script: {instanceID: 0}
+    - Class: 72
+      Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 1722}
+    - Class: 114
+      Script: {instanceID: 1766}
+    - Class: 114
+      Script: {instanceID: 2386}
+    - Class: 114
+      Script: {instanceID: 2608}
+    - Class: 114
+      Script: {instanceID: 2854}
+    - Class: 114
+      Script: {instanceID: 3068}
+    - Class: 114
+      Script: {instanceID: 3392}
+    - Class: 114
+      Script: {instanceID: 4348}
+    - Class: 114
+      Script: {instanceID: 4458}
+    - Class: 114
+      Script: {instanceID: 4728}
+    - Class: 114
+      Script: {instanceID: 5014}
+    - Class: 114
+      Script: {instanceID: 5168}
+    - Class: 114
+      Script: {instanceID: 5472}
+    - Class: 114
+      Script: {instanceID: 5518}
+    - Class: 114
+      Script: {instanceID: 6224}
+    - Class: 114
+      Script: {instanceID: 6554}
+    - Class: 114
+      Script: {instanceID: 7340}
+    - Class: 114
+      Script: {instanceID: 7664}
+    - Class: 114
+      Script: {instanceID: 7952}
+    - Class: 114
+      Script: {instanceID: 61526}
+    - Class: 114
+      Script: {instanceID: 128608}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 135
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/Win Screen.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 1722}
+    - Class: 114
+      Script: {instanceID: 1766}
+    - Class: 114
+      Script: {instanceID: 2854}
+    - Class: 114
+      Script: {instanceID: 3068}
+    - Class: 114
+      Script: {instanceID: 3392}
+    - Class: 114
+      Script: {instanceID: 5472}
+    - Class: 114
+      Script: {instanceID: 6224}
+    - Class: 114
+      Script: {instanceID: 6554}
+    - Class: 114
+      Script: {instanceID: 31442}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
   scriptHashData:
   - hash:
       serializedVersion: 2
@@ -183,6 +543,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI
     namespaceName: UnityEngine.UI
     className: ContentSizeFitter
+  - hash:
+      serializedVersion: 2
+      Hash: 540882762544409cc4530e60db00e951
+    assemblyName: UnityEngine.UI
+    namespaceName: UnityEngine.UI
+    className: CanvasScaler
   - hash:
       serializedVersion: 2
       Hash: 19fb23e61b599fe4802e01e59b038984
@@ -201,6 +567,18 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI
     namespaceName: UnityEngine.UI
     className: Image
+  - hash:
+      serializedVersion: 2
+      Hash: 06080065e6267b68a6d2b486048302e7
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: CannonBall
+  - hash:
+      serializedVersion: 2
+      Hash: 6370e5597d9f4686806bd138e799d124
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: DamageManager
   - hash:
       serializedVersion: 2
       Hash: f45600bcc886206dd55a3208474aad61
@@ -581,7 +959,7 @@ ScriptsOnlyBuild:
     className: UnityOnTransformParentChangedMessageListener
   - hash:
       serializedVersion: 2
-      Hash: fc0084080c5e5b28859ab42d990df86d
+      Hash: 4b8b519fd02a66076fc388f4251f8b43
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: BoatManager
@@ -629,6 +1007,12 @@ ScriptsOnlyBuild:
     className: BaseInput
   - hash:
       serializedVersion: 2
+      Hash: ef45844e7c772e79b6a7b8756a75d34f
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: AISteeringManager
+  - hash:
+      serializedVersion: 2
       Hash: 418b67019f13f9684552f2693bae3971
     assemblyName: Assembly-CSharp
     namespaceName: TMPro.Examples
@@ -669,6 +1053,12 @@ ScriptsOnlyBuild:
     assemblyName: Crest
     namespaceName: Crest
     className: OceanRenderer
+  - hash:
+      serializedVersion: 2
+      Hash: 7aef090e5b565c5f56fe91689cabd6be
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: FireCannons
   - hash:
       serializedVersion: 2
       Hash: 6b5c1add33b88386707003389a147610
@@ -747,6 +1137,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Postprocessing.Runtime
     namespaceName: UnityEngine.Rendering.PostProcessing
     className: PostProcessEffectSettings
+  - hash:
+      serializedVersion: 2
+      Hash: aeccdcf93f1f7a48220d167b09967534
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: AIBoatManager
   - hash:
       serializedVersion: 2
       Hash: 4718916586b3818eb69bf65df61f0f3a
@@ -839,7 +1235,7 @@ ScriptsOnlyBuild:
     className: MotionBlur
   - hash:
       serializedVersion: 2
-      Hash: bfec27e1faf963eb1cd36d71816132bb
+      Hash: daf2ed77c83deec90fd4ca62d256779b
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: CannonManager
@@ -1055,6 +1451,12 @@ ScriptsOnlyBuild:
     className: TMP_FontAsset
   - hash:
       serializedVersion: 2
+      Hash: f22a291c6bbf244eb9450629a15995a9
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: SetSailStatus
+  - hash:
+      serializedVersion: 2
       Hash: 4ea1bf258a208f00f70cf744bd7e56ce
     assemblyName: Unity.Postprocessing.Runtime
     namespaceName: UnityEngine.Rendering.PostProcessing
@@ -1157,16 +1559,16 @@ ScriptsOnlyBuild:
     className: VisualiseRayTrace
   - hash:
       serializedVersion: 2
-      Hash: 540882762544409cc4530e60db00e951
-    assemblyName: UnityEngine.UI
-    namespaceName: UnityEngine.UI
-    className: CanvasScaler
-  - hash:
-      serializedVersion: 2
       Hash: 4166580c620718548959a77fa7b43fc1
     assemblyName: Assembly-CSharp
     namespaceName: TMPro.Examples
     className: TextMeshSpawner
+  - hash:
+      serializedVersion: 2
+      Hash: 314daa1bf2fce52479bf6334e7edf57c
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: VoicelineManager
   - hash:
       serializedVersion: 2
       Hash: ef38c1407dba8c1f5d69f5db61a694fe
@@ -1499,7 +1901,7 @@ ScriptsOnlyBuild:
     className: RenderAlphaOnSurface
   - hash:
       serializedVersion: 2
-      Hash: 8796eb7558d1e07b1c58d90852957f26
+      Hash: dc93119843462bed19fde325a9425651
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: SteeringManager
@@ -1701,7 +2103,29 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 505fc77fd44dd5add67b8d45af5f770f
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: GoToMenu
+  - hash:
+      serializedVersion: 2
+      Hash: e552e5c8c56a4dec8d1febdd42180b8a
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: GoToGame
+  - hash:
+      serializedVersion: 2
+      Hash: 6b8beaca557596b9d6b22042906c29ba
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: GoToInstructions
   platform: 19
   scenePathNames:
+  - Assets/Scenes/Title Screen.unity
+  - Assets/Scenes/Win Screen.unity
   - Assets/Scenes/Ocean.unity
+  - Assets/Scenes/Lose Screen.unity
+  - Assets/Scenes/Instructions.unity
   playerPath: C:/Users/tucke/Unity Projects/Game Builds/Pirate Warfare.exe
