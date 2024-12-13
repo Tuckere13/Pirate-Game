@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 
 public class AIBoatManager : MonoBehaviour
@@ -18,6 +20,10 @@ public class AIBoatManager : MonoBehaviour
     public enum SailStatus { Empty, OneQuarter, Half, ThreeQuarters, Full };
     public SailStatus currentSailStatus;
 
+    public int shipHealth = 100;
+
+    private bool playerInRange = false;
+    private bool canShoot = true;
 
     // Not used in AI
     public static class SailStatusValues // Set Enums to decimal values
@@ -99,6 +105,28 @@ public class AIBoatManager : MonoBehaviour
         //UnityEngine.Debug.Log(currentSailStatus);
 
 
+
+        if (shipHealth <= 0)
+        {
+            Debug.Log("Ship Sunk!!!!");
+            //SceneManager.LoadScene("WinScreen");
+        }
+
+        if (playerInRange && canShoot)
+        {
+            FireCannons(leftSideCannons);
+            FireCannons(rightSideCannons);
+
+            StartCoroutine(ShootingCooldown());
+        }
+
+    }
+
+    private IEnumerator ShootingCooldown()
+    {
+        canShoot = false; // Disable shooting
+        yield return new WaitForSeconds(30f); // Wait for 30 seconds
+        canShoot = true; // Re-enable shooting
     }
 
     private void FixedUpdate()
@@ -243,6 +271,28 @@ public class AIBoatManager : MonoBehaviour
             }
         }
     }
+
+
+    void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Cannon Ball"))
+        {
+            shipHealth -= 5;
+        }
+
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("AIShootBox"))
+        {
+            playerInRange = true;
+
+        }
+        else
+        {
+            playerInRange = false;
+        }
+    }
+
+
 
 
 }

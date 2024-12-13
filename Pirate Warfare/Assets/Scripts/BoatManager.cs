@@ -95,7 +95,11 @@ public class BoatManager : MonoBehaviour
 
         //UnityEngine.Debug.Log(currentSailStatus);
 
-
+        if (shipHealth <= 0)
+        {
+            Debug.Log("Ship Sunk!!!!");
+            //SceneManager.LoadScene("WinScreen");
+        }
     }
 
     private void FixedUpdate()
@@ -238,6 +242,17 @@ public class BoatManager : MonoBehaviour
                 float delay = UnityEngine.Random.Range(1f, 2f); // Delay Range of cannon shot
                 cannonManager.Fire(delay);
             }
+        }
+    }
+
+
+
+
+    void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Cannon Ball"))
+        {
+            shipHealth -= 5;
         }
     }
 

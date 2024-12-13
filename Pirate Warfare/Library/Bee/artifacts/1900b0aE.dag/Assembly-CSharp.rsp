@@ -362,6 +362,7 @@
 "Assets/AISteeringManager.cs"
 "Assets/CannonBall.cs"
 "Assets/CannonManager.cs"
+"Assets/DamageManager.cs"
 "Assets/Development/Scripts/Constants.cs"
 "Assets/Development/Scripts/TestCameraChange.cs"
 "Assets/Development/Scripts/TestDynamicResolution.cs"
