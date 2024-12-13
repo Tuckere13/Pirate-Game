@@ -41,7 +41,7 @@ public class AIBoatManager : MonoBehaviour
     [Header("Ship Steering")]
     [SerializeField] private GameObject steeringWheel;
     public AISteeringManager AisteeringManager;
-    private float currentWheelRotation;
+    private float AIcurrentWheelRotation;
     public float rotationSpeed = 5.0f; // Adjust this value for a slower or faster turn
     public float maxTurnAngle = 30.0f; // Maximum turning angle per second at full wheel rotation
     private float fullSpeedTurnSpeed = 0.0f;
@@ -92,8 +92,8 @@ public class AIBoatManager : MonoBehaviour
 
         if (AisteeringManager != null)
         {
-            currentWheelRotation = AisteeringManager.currentWheelRotation;
-            //UnityEngine.Debug.Log(currentWheelRotation);
+            AIcurrentWheelRotation = AisteeringManager.AIcurrentWheelRotation;
+            //UnityEngine.Debug.Log(AIcurrentWheelRotation);
         }
 
         //UnityEngine.Debug.Log(currentSailStatus);
@@ -120,7 +120,7 @@ public class AIBoatManager : MonoBehaviour
     }
     private void ApplyRotation()
     {
-        float targetTurnAngle = currentWheelRotation * maxTurnAngle;
+        float targetTurnAngle = AIcurrentWheelRotation * maxTurnAngle;
 
         // Calculate the actual turn amount (smooth transition)
         float currentTurnRate = Mathf.Lerp(0, targetTurnAngle, rotationSpeed * Time.fixedDeltaTime);

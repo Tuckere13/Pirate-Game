@@ -30,6 +30,7 @@ public class BoatManager : MonoBehaviour
     };
     }
 
+    public int shipHealth = 100;
 
     [Header("Ship Movement")]
     public float shipThrust = 10.0f;
@@ -53,7 +54,7 @@ public class BoatManager : MonoBehaviour
 
 
 
-    public int shipHealth = 100;
+
 
     void Awake()
     {

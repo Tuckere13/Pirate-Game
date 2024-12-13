@@ -1,134 +1,130 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class AISteeringManager : MonoBehaviour
 {
-    public Transform steeringWheel;
+    public Transform aiShipFrontPoint;
+    public GameObject ship;
     public GameObject Wheel;
-    public GameObject player;
 
-    private Vector3 playerPosition;
-    private Vector3 playerDirection;
-    private float playerDistance;
+    public List<Transform> targetPoints; // List of potential target points
+    private Transform currentTarget;
 
+    public float turningThreshold = 1.0f; // Angle threshold for stopping the turn
+    public float movementSpeed = 5.0f; // Movement speed of the ship
+    public float stoppingDistance = 1.5f; // Distance to stop near the target point
 
-    private Quaternion targetRotation;
+    public Vector3 randomPointToGo;
 
     [Header("Ship Rotation")]
-    public float currentWheelRotation = 0.0f;
+    public float AIcurrentWheelRotation = 0.0f;
     [Tooltip("Higher Number = Higher Turn Speed")]
     [Range(0f, .2f)]
     public float shipRotationSpeed = 0.075f;
 
-    private List<Vector3> wayPoints = new List<Vector3>(); // List of all points on path
-
-    [SerializeField] private int maxIterations = 30; // Max iterations for waypoint generation
-    private int currentIteration = 0;
-
-    [Tooltip("Lower Number = Higher Accuracy")]
-    public int rayCastDistance = 1;
-    int pointsOnLine;
-    [Tooltip("Radius of circle that police AI will check for collisions")]
-    public float checkRadius = 0.5f;
-
-
-    private int currentWaypointIndex = 0;
-
-
-    // Colliders to avoid
-    private Collider2D playerCollider;
-    private Collider2D selfCollider;
-
-
-    private void Awake()
+    private void Start()
     {
 
+        UnityEngine.Random.InitState(Environment.TickCount);
 
+
+        randomPointToGo = SelectNewTarget();
     }
-
-
     private void Update()
     {
+        // Calculate the direction to the random point
+        Vector3 dirToRandomPoint = randomPointToGo - transform.position;
 
-        playerPosition = player.transform.position;
-        playerDistance = Vector3.Distance(playerPosition, transform.position);
+        // Ignore Z-axis (project onto the XY plane)
+        Vector2 dirToRandomPointXY = new Vector2(dirToRandomPoint.x, dirToRandomPoint.y);
+        Vector2 forwardXY = new Vector2(transform.forward.x, transform.forward.y);
 
-        Pathfind();
-
-        if (wayPoints.Count > 0)
+        // Check if the distance to the random point is greater than 50
+        if (Vector3.Distance(transform.position, randomPointToGo) >= 1000)
         {
-            DecideTurnDirectionBasedOnPath();
-        }
-    }
+            // Use the 2D cross product to determine left or right
+            float cross = forwardXY.x * dirToRandomPointXY.y - forwardXY.y * dirToRandomPointXY.x;
 
-    // Determine turn direction based on the next waypoint
-    private void DecideTurnDirectionBasedOnPath()
-    {
-        Vector3 currentPosition = transform.position;
-
-        // Get the next waypoint
-        Vector3 nextWaypoint = wayPoints[0]; // Get the first waypoint in the list
-
-        // Calculate the direction to the next waypoint
-        Vector3 directionToWaypoint = (nextWaypoint - currentPosition).normalized;
-
-        // Calculate the angle between the current forward direction and the direction to the waypoint
-        float angleToWaypoint = Vector3.SignedAngle(transform.forward, directionToWaypoint, Vector3.up);
-
-        // Turn the wheel based on the angle
-        if (angleToWaypoint > 5f) // Threshold for turning right
-        {
-            TurnWheelRight();
-        }
-        else if (angleToWaypoint < -5f) // Threshold for turning left
-        {
-            TurnWheelLeft();
+            if (cross > 0)
+            {
+                // Point is to the left
+                TurnWheelLeft();
+                //Debug.Log("Point is to the LEFT of the object.");
+            }
+            else if (cross < 0)
+            {
+                TurnWheelRight();
+                // Point is to the right
+                //Debug.Log("Point is to the RIGHT of the object.");
+            }
+            else
+            {
+                ResetWheel();
+                // Point is directly in front or behind
+                //Debug.Log("Point is directly in line with the forward direction.");
+            }
         }
         else
         {
-            // Reset wheel to straight if the angle is small
-            ResetWheel();
+            UnityEngine.Debug.Log("New point selected");
+            randomPointToGo = SelectNewTarget();
         }
     }
+
+
+    private Vector3 SelectNewTarget()
+    {
+        float randomX = GetRandomNumberExcludingRange(-5000f, 5000f, -3000f, 3000f);
+        float randomY = GetRandomNumberExcludingRange(-5000f, 5000f, -3000f, 3000f);
+
+        Vector3 searchPoint = new Vector3(transform.position.x + randomX, transform.position.y + randomY, aiShipFrontPoint.transform.position.z);
+
+        return searchPoint;
+    }
+
+
+    float GetRandomNumberExcludingRange(float min, float max, float excludeMin, float excludeMax)
+    {
+        float randomValue;
+        do
+        {
+            randomValue = UnityEngine.Random.Range(min, max);
+        }
+        while (randomValue > excludeMin && randomValue < excludeMax);
+
+        return randomValue;
+    }
+
 
     private void ResetWheel()
     {
-        if (currentWheelRotation > 0)
-        {
-            TurnWheelLeft();
-        }
-        else if (currentWheelRotation < 0)
-        {
-            TurnWheelRight();
-        }
+        AIcurrentWheelRotation = 0;
     }
 
 
 
+    /*
     private void Pathfind()
     {
         wayPoints.Clear(); // Clear the list of waypoints
 
-        int wayPointsNeeded = (int)(playerDistance / rayCastDistance); // Number of waypoints needed
-        Vector3 rayCastEndpoint = transform.position + playerDirection * rayCastDistance; // Start position
+        // Use ship's position as the starting point
+        Vector3 rayCastEndpoint = ship.transform.position + playerDirection * rayCastDistance; // Start position
         wayPoints.Add(rayCastEndpoint); // Add start position to the list
 
         float angleStep = 10.0f; // The angle to add after a failed collision check
-
         currentIteration = 0;
 
-        for (int i = 0; i < wayPointsNeeded; i++)
+        for (int i = 0; i < (int)(playerDistance / rayCastDistance); i++)
         {
-
             bool foundClearPath = false;
             float angleOffsetLeft = 0.0f;
             float angleOffsetRight = 0.0f;
 
             while (!foundClearPath && currentIteration < maxIterations)
             {
-                Vector3 previousPoint = rayCastEndpoint; // Store current endpoint if need to reverse
+                Vector3 previousPoint = rayCastEndpoint; // Use the current rayCastEndpoint for calculations
 
                 // Calculate possible endpoints by rotating left and right
                 Quaternion leftRotation = Quaternion.AngleAxis(angleOffsetLeft, Vector3.up);
@@ -146,104 +142,90 @@ public class AISteeringManager : MonoBehaviour
 
                 if (hasCollisionLeft)
                 {
-                    // If there's a collision on the left, increment the left angle offset
+                    // Increment left angle offset if there's a collision
                     angleOffsetLeft += angleStep;
                 }
                 else if (hasCollisionRight)
                 {
-                    // If there's a collision on the right, decrement the right angle offset
+                    // Decrement right angle offset if there's a collision
                     angleOffsetRight -= angleStep;
                 }
 
-                // Decide which side to turn based off which side wouldn't collide
+                // Determine which direction is clear
                 if (!hasCollisionLeft && !hasCollisionRight)
                 {
-                    // Choose closest direction if both are good
-                    if (Mathf.Abs(angleOffsetLeft) <= Mathf.Abs(angleOffsetRight))
-                    {
-                        rayCastEndpoint = possibleLeftTurn;
-                    }
-                    else
-                    {
-                        rayCastEndpoint = possibleRightTurn;
-                    }
+                    rayCastEndpoint = Mathf.Abs(angleOffsetLeft) <= Mathf.Abs(angleOffsetRight)
+                        ? possibleLeftTurn
+                        : possibleRightTurn;
                     foundClearPath = true;
                 }
                 else if (!hasCollisionLeft)
                 {
-                    // Only the left direction is clear
                     rayCastEndpoint = possibleLeftTurn;
                     foundClearPath = true;
                 }
                 else if (!hasCollisionRight)
                 {
-                    // Only the right direction is clear
                     rayCastEndpoint = possibleRightTurn;
                     foundClearPath = true;
                 }
                 else
                 {
-                    // If both directions are blocked, continue adjusting angles
+                    // Adjust angles further if both directions are blocked
                     angleOffsetLeft += angleStep;
                     angleOffsetRight -= angleStep;
                 }
 
-                currentIteration++; // Prevent excessive waypoint generation
+                currentIteration++; // Increment iteration count to avoid infinite loops
 
-                // FOR VISUAL TESTING //
                 if (foundClearPath)
                 {
-                    wayPoints.Add(rayCastEndpoint);
-                    // Uncomment if you have a visualization system
-                    // GameObject waypoint = Instantiate(waypointSphere, rayCastEndpoint, Quaternion.identity);
-                    // waypointObjects.Add(waypoint);
+                    wayPoints.Add(rayCastEndpoint); // Add the valid endpoint to the waypoints
                 }
             }
         }
 
+        // Visualize waypoints for debugging
         foreach (var point in wayPoints)
         {
-            Debug.Log("Waypoint: " + point);
+            Debug.DrawLine(ship.transform.position, point, Color.red, 0.5f);
         }
     }
+
+
 
     // Helper method to check for relevant collisions
     private bool HasRelevantCollision(Collider[] hitColliders)
+{
+    foreach (Collider collider in hitColliders)
     {
-        foreach (Collider collider in hitColliders)
+        if (collider != playerCollider && collider != selfCollider)
         {
-            if (collider != playerCollider && collider != selfCollider)
-            {
-                return true; // Found a relevant collision
-            }
+            return true; // Found a relevant collision
         }
-        return false; // No relevant collisions found
     }
+    return false; // No relevant collisions found
+}
+    */
 
     private void TurnWheelRight()
     {
-
-            if (currentWheelRotation <= 1.0f)
-            {
-                currentWheelRotation += shipRotationSpeed * Time.deltaTime;
-
-                Wheel.transform.Rotate(Vector3.up, -60.0f * Time.deltaTime);
-            }
-
+        if (AIcurrentWheelRotation < .50f) // Limit max rotation
+        {
+            AIcurrentWheelRotation += shipRotationSpeed * Time.deltaTime;
+            Wheel.transform.Rotate(Vector3.up, -60.0f * Time.deltaTime);
+        }
     }
-
 
     private void TurnWheelLeft()
     {
- 
-        if (currentWheelRotation >= -1.0f)
+        if (AIcurrentWheelRotation > -.50f) // Limit min rotation
         {
-            currentWheelRotation += -shipRotationSpeed * Time.deltaTime;
-
+            AIcurrentWheelRotation -= shipRotationSpeed * Time.deltaTime;
             Wheel.transform.Rotate(Vector3.up, 60.0f * Time.deltaTime);
         }
-
     }
+
 
 
 }
